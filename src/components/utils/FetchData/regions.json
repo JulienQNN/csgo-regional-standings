@@ -1,0 +1,5 @@
+{
+    "standings_europe": "https://raw.githubusercontent.com/ValveSoftware/csgo/main/regional_standings/standings_europe.md",
+    "standings_americas": "https://raw.githubusercontent.com/ValveSoftware/csgo/main/regional_standings/standings_americas.md",
+    "standings_asia": "https://raw.githubusercontent.com/ValveSoftware/csgo/main/regional_standings/standings_asia.md"
+}
