@@ -1,9 +1,17 @@
 import path from "path"
-import fs from "fs"
+import fs, { readFileSync } from "fs"
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const regions = JSON.parse(readFileSync(path.resolve(__dirname, "../regions.json"), "utf-8"))
+var objMap = new Map(Object.entries(regions));
 
 const getMostRecentFile = (dir) => {
     const files = orderRecentFiles(dir);
-    return files.length ? files[0] : undefined;
+    console.log([files[0].file, files[1].file])
+    return files.length ? [files[0].file, files[1].file] : undefined;
 };
 
 const orderRecentFiles = (dir) => {
@@ -13,4 +21,10 @@ const orderRecentFiles = (dir) => {
         .sort((a, b) => b.mtime.getTime() - a.mtime.getTime());
 };
 
-console.log(getMostRecentFile('../standings/standings_europe/'));
+export const returnLastStandingsFiles = () => {
+    objMap.forEach((url, standing_name) => {
+        getMostRecentFile(path.resolve(__dirname, `../standings/${standing_name}/`), "utf-8")
+    });
+}
+
+returnLastStandingsFiles()
