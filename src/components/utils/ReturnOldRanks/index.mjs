@@ -8,10 +8,12 @@ const __dirname = path.dirname(__filename);
 const regions = JSON.parse(readFileSync(path.resolve(__dirname, "../regions.json"), "utf-8"))
 var objMap = new Map(Object.entries(regions));
 
-const getMostRecentFile = (dir) => {
+const getMostRecentFile = (dir, standing_name) => {
     const files = orderRecentFiles(dir);
-    console.log([files[0].file, files[1].file])
-    return files.length ? [files[0].file, files[1].file] : undefined;
+    return files.length ? [standing_name, {
+        "new": path.resolve(__dirname, `../standings/${standing_name}/${files[0].file}`),
+        "old": path.resolve(__dirname, `../standings/${standing_name}/${files[1].file}`)
+    }] : undefined;
 };
 
 const orderRecentFiles = (dir) => {
@@ -22,9 +24,12 @@ const orderRecentFiles = (dir) => {
 };
 
 export const returnLastStandingsFiles = () => {
+    const standingsToCompare = []
     objMap.forEach((url, standing_name) => {
-        getMostRecentFile(path.resolve(__dirname, `../standings/${standing_name}/`), "utf-8")
+        standingsToCompare.push(getMostRecentFile(path.resolve(__dirname, `../standings/${standing_name}/`), standing_name)
+        )
     });
+    return standingsToCompare
 }
 
-returnLastStandingsFiles()
+console.log(returnLastStandingsFiles())

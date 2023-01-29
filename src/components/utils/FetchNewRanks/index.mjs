@@ -1,17 +1,17 @@
 import https from "https"
 import path from "path"
-import fs, { readFileSync} from "fs"
+import fs, { readFileSync } from "fs"
 import dateFormat from "dateformat"
+import { fileURLToPath } from 'url';
 
-const regions = JSON.parse(readFileSync("./regions.json", "utf-8"))
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const regions = JSON.parse(readFileSync(path.resolve(__dirname, "../regions.json"), "utf-8"))
 var objMap = new Map(Object.entries(regions));
 
-objMap.forEach((url, standing_name) => {
-    downloadFile(url, standing_name)
-});
-
-function downloadFile(url, standing_name) {
-    const filename = `../standings/${standing_name}/${dateFormat(Date(), "dd-mm-yy")}.md`
+const downloadFile = (url, standing_name) => {
+    const filename = path.resolve(__dirname, `../standings/${standing_name}/${standing_name}-${dateFormat(Date(), "dd-mm-yy")}.md`)
     https.get(url, (res) => {
         res.setEncoding('utf8');
         res.on('data', function(chunk) {
@@ -22,3 +22,8 @@ function downloadFile(url, standing_name) {
     });
 }
 
+export const saveNewStandingsFiles = () => {
+    objMap.forEach((url, standing_name) => {
+        downloadFile(url, standing_name)
+    });
+}
