@@ -5,11 +5,11 @@ const { JSDOM } = jsdom;
 
 const transformFiles = (jsonFilesList) => {
     const standings = new Map(Object.entries(jsonFilesList))
-    standings.forEach((values, keys) => {
+    standings.forEach((values) => {
         const newStandings = htmlToJson(values.new)
         const oldStandings = htmlToJson(values.old)
-        for (let i = 0; i < newStandings.length; i++) {
-            for (let j = 0; j < oldStandings.length; j++) {
+        for (let i = 1; i < newStandings.length; i++) {
+            for (let j = 1; j < oldStandings.length; j++) {
                 if (newStandings[i]['team'] === oldStandings[j]['team']) {
                     newStandings[i]['ranksdiff'] = oldStandings[j]['standing'] - newStandings[i]['standing']
                     newStandings[i]['pointsdiff'] = newStandings[i]['points'] - oldStandings[j]['points']
@@ -18,16 +18,16 @@ const transformFiles = (jsonFilesList) => {
                 }
             }
         }
-        for (let x = 0; x < newStandings.length; x++) {
-            if (newStandings[x]['ranksDiff'] === undefined) {
-                newStandings[x]['ranksDiff'] = 0
-                newStandings[x]['pointsDiff'] = 0
+        for (let x = 1; x < newStandings.length; x++) {
+            if (newStandings[x]['ranksdiff'] === undefined) {
+                newStandings[x]['ranksdiff'] = 0
+                newStandings[x]['pointsdiff'] = 0
             }
 
             newStandings[x]['roster'] = newStandings[x]['roster'].split(', ')
         }
         var jsonContent = JSON.stringify(newStandings);
-        fs.writeFile(`../data/${values.region}.json`, jsonContent, 'utf8', function(err) {
+        fs.writeFile(`../Data/${values.region}.json`, jsonContent, 'utf8', function(err) {
             if (err) {
                 return console.log(err);
             }
@@ -41,10 +41,17 @@ const htmlToJson = (standing) => {
         if (err) throw err;
         return data
     });
+    const result = [];
 
     const html = marked.parse(data)
     const dom = new JSDOM(html);
     const table = dom.window.document.querySelector("table");
+
+    const title = dom.window.document.querySelector('h3');
+    var jsonContent = {title : `${title.textContent}`};
+
+    result.push(jsonContent)
+
     const headers = Array.from(table.querySelectorAll('thead tr th')).map(el => {
         const lastIndexOfSpace = el.textContent.lastIndexOf(' ');
         if (lastIndexOfSpace === -1) {
@@ -54,10 +61,8 @@ const htmlToJson = (standing) => {
         return el.textContent.slice(0, lastIndexOfSpace).trim().toLowerCase()
     });
 
-    console.log(headers)
-    const result = [];
-    const rows = Array.from(table.querySelectorAll('tbody tr'));
 
+    const rows = Array.from(table.querySelectorAll('tbody tr'));
     rows.forEach(row => {
         const cells = Array.from(row.querySelectorAll('td')).map(el => el.textContent.trim());
         result.push(headers.reduce((rowRes, header, headerIndex) => {

@@ -24,6 +24,7 @@
     "jsdom": "^21.1.0",
     "marked": "^4.2.12",
     "remark-parse": "^10.0.1",
+    "solid-icons": "^1.0.4",
     "solid-js": "^1.6.9",
     "ts-node": "^10.9.1",
     "unified": "^10.1.2"

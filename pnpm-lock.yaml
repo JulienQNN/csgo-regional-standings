@@ -9,6 +9,7 @@ specifiers:
   marked: ^4.2.12
   postcss: ^8.4.21
   remark-parse: ^10.0.1
+  solid-icons: ^1.0.4
   solid-js: ^1.6.9
   tailwindcss: ^3.2.4
   ts-node: ^10.9.1
@@ -23,6 +24,7 @@ dependencies:
   jsdom: 21.1.0
   marked: 4.2.12
   remark-parse: 10.0.1
+  solid-icons: 1.0.4_solid-js@1.6.9
   solid-js: 1.6.9
   ts-node: 10.9.1_awa2wsr5thmg3i7jqycphctjfq
   unified: 10.1.2
@@ -1825,6 +1827,15 @@ packages:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
     hasBin: true
     dev: true
+
+  /solid-icons/1.0.4_solid-js@1.6.9:
+    resolution: {integrity: sha512-gJTp4in3+OYCs9WvDkSLt4Los2unR3Uoder8wjh15GsfP20xiNOLfPTJllXmn+fI8+k3x7bRYtLGIgWd9fUQug==}
+    engines: {node: '>= 16'}
+    peerDependencies:
+      solid-js: '*'
+    dependencies:
+      solid-js: 1.6.9
+    dev: false
 
   /solid-js/1.6.9:
     resolution: {integrity: sha512-kV3fMmm+1C2J95c8eDOPKGfZHnuAkHUBLG4hX1Xu08bXeAIPqmxuz/QdH3B8SIdTp3EatBVIyA6RCes3hrGzpg==}
