@@ -12,18 +12,31 @@ var objMap = new Map(Object.entries(regions));
 
 const downloadFile = (url, standing_name) => {
     const filename = path.resolve(__dirname, `../standings/${standing_name}/${standing_name}-${dateFormat(Date(), "dd-mm-yy")}.md`)
-    https.get(url, (res) => {
-        res.setEncoding('utf8');
-        res.on('data', function(chunk) {
-            fs.appendFile(path.join(filename), chunk, function(err) {
-                if (err) throw err;
+    try {
+        if (!fs.existsSync(filename)) {
+            https.get(url, (res) => {
+                res.on('data', function(chunk) {
+                    fs.appendFile(path.join(filename), chunk, function(err) {
+                        if (err) throw err;
+                    });
+                });
             });
-        });
-    });
+        }
+    } catch (err) {
+        console.error(err)
+    }
 }
 
 export const saveNewStandingsFiles = () => {
-    objMap.forEach((url, standing_name) => {
-        downloadFile(url, standing_name)
-    });
+    try {
+        objMap.forEach((url, standing_name) => {
+            downloadFile(url, standing_name)
+        });
+    } catch (err) {
+        console.error(err)
+    }
 }
+
+export default saveNewStandingsFiles
+
+saveNewStandingsFiles()

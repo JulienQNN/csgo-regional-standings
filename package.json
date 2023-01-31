@@ -19,16 +19,10 @@
     "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
-    "@moox/markdown-to-json": "^1.0.0",
-    "axios": "^1.2.4",
+    "@tanstack/solid-table": "^8.7.8",
     "dateformat": "^5.0.3",
-    "fs-jetpack": "^5.1.0",
-    "gray-matter": "^4.0.3",
-    "html-to-json": "^0.6.0",
     "jsdom": "^21.1.0",
-    "markdown-json": "^1.6.1",
     "marked": "^4.2.12",
-    "md-2-json": "^2.0.0",
     "remark-parse": "^10.0.1",
     "solid-js": "^1.6.9",
     "ts-node": "^10.9.1",

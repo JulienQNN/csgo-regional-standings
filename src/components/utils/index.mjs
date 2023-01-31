@@ -1,16 +1,15 @@
-import { saveNewStandingsFiles } from "./FetchNewRanks/index.mjs"
-import { returnLastStandingsFiles } from './ReturnOldRanks/index.mjs'
-import { transformFiles } from './TransformMdToJson/index.mjs'
-const updateData = () => {
+import saveNewStandingsFiles from "./FetchNewRanks/index.mjs"
+import returnLastStandingsFiles from './ReturnOldRanks/index.mjs'
+import transformFiles from './TransformMdToJson/index.mjs'
+
+function updateData() {
     try {
         saveNewStandingsFiles()
     } catch (err) {
         throw err
     }
-    try {
+    finally {
         transformFiles(returnLastStandingsFiles())
-    } catch (err) {
-        throw err
     }
 }
 

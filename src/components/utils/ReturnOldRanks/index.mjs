@@ -10,12 +10,14 @@ var objMap = new Map(Object.entries(regions));
 
 const getMostRecentFile = (dir, standing_name) => {
     const files = orderRecentFiles(dir);
-    return files.length ? {
-        "region": standing_name,
-        "new": path.resolve(__dirname, `../standings/${standing_name}/${files[0].file}`),
-        "old": path.resolve(__dirname, `../standings/${standing_name}/${files[1].file}`)
-    } : undefined;
-};
+    if (files[0] && files[1]) {
+        return {
+            "region": standing_name,
+            "new": path.resolve(__dirname, `../standings/${standing_name}/${files[0].file}`),
+            "old": path.resolve(__dirname, `../standings/${standing_name}/${files[1].file}`)
+        }
+    }
+}
 
 const orderRecentFiles = (dir) => {
     return fs.readdirSync(dir)
@@ -33,4 +35,4 @@ export const returnLastStandingsFiles = () => {
     return standingsToCompare
 }
 
-returnLastStandingsFiles()
+export default returnLastStandingsFiles
