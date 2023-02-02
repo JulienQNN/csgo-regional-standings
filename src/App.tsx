@@ -5,6 +5,7 @@ import {
     SortingState,
     createSolidTable,
 } from '@tanstack/solid-table'
+import usePopper from 'solid-popper';
 import { createSignal, For, Show } from 'solid-js'
 import { columns, Team, europeData } from "./components/Data/DataStandings"
 import { Nav } from "./components/Nav"
@@ -14,6 +15,13 @@ function App() {
     const [title, setTitle] = createSignal<string>("EUROPE")
     const [subtitle, setSubTitle] = createSignal<string>(europeData[0].title)
     const [sorting, setSorting] = createSignal<SortingState>([])
+    const [anchor, setAnchor] = createSignal();
+    const [popper, setPopper] = createSignal();
+
+
+    usePopper(anchor, popper, {
+        placement: 'bottom-end',
+    });
 
     const table = createSolidTable({
         get data() {
@@ -21,10 +29,10 @@ function App() {
         },
         columns,
         initialState: {
-            columnVisibility: {
-                'pointsdiff': false,
-                'ranksdiff': false
-            }
+            // columnVisibility: {
+            //     'pointsdiff': false,
+            //     'ranksdiff': false
+            // }
         },
         state: {
             get sorting() {
@@ -41,7 +49,8 @@ function App() {
             <Nav refreshData={setData} refreshTitle={setTitle} refreshSubtitle={setSubTitle} />
             <div class="overflow-x-auto w-full drop-shadow-2xl">
                 <h1 class="my-5 mx-2 sm:mx-auto max-w-4xl text-4xl w-full whitespace-nowrap font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"><span class="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">{title}</span></h1>
-                <h3 class="my-5 mx-2 sm:mx-auto max-w-4xl text-sm w-full whitespace-nowrap text-lg font-normal text-black lg:text-xl dark:text-gray-400">{subtitle}</h3>
+                <h3 ref={setAnchor} class="my-5 mx-2 mb-4 sm:mx-auto max-w-4xl text-sm w-full whitespace-nowrap text-lg font-normal text-black lg:text-xl dark:text-gray-400">{subtitle}
+                </h3>
                 <table class='mx-auto sm:my-5 max-w-4xl w-full whitespace-nowrap sm:rounded-lg bg-white divide-y divide-white/40 overflow-hidden bg-white/60 backdrop-blur-sm'>
                     <thead class="bg-gray-800">
                         <For each={table.getHeaderGroups()}>
@@ -116,6 +125,12 @@ function App() {
                         </For>
                     </tfoot>
                 </table>
+
+                <div ref={setPopper}>You can sort by columns!</div>
+                <div class="px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
+                    <p class="mb-8 text-lg font-normal lg:text-xl sm:px-16 xl:px-48">
+                      This ranking is based on Valve's new region ranking. Valve bases its rankings on player rosters and not teams, which is why a team can appear twice in the ranking (but not with the same roster).</p>
+                </div>
             </div>
         </div>
     )

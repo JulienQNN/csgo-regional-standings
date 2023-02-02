@@ -19,6 +19,7 @@
     "vite-plugin-solid": "^2.5.0"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "@tanstack/solid-table": "^8.7.8",
     "dateformat": "^5.0.3",
     "jsdom": "^21.1.0",
@@ -26,6 +27,7 @@
     "remark-parse": "^10.0.1",
     "solid-icons": "^1.0.4",
     "solid-js": "^1.6.9",
+    "solid-popper": "^0.2.1",
     "ts-node": "^10.9.1",
     "unified": "^10.1.2"
   }

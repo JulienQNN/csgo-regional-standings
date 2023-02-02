@@ -28,6 +28,32 @@ export const columns: ColumnDef<Team>[] = [
                 return (
                     <p class='inline-flex items-center justify-center space-x-4'>
                         <span>{props.row.original.standing}</span>
+                    </p>
+                );
+            } else if (props.row.original.ranksdiff === 0) {
+                return (
+                    <p class='inline-flex items-center justify-center space-x-4'>
+                        <span>{props.row.original.standing}</span>
+                    </p>
+                );
+            } else {
+                return (
+                    <p class='inline-flex items-center justify-center space-x-4'>
+                        <span>{props.row.original.standing}</span>
+                    </p>
+                );
+            }
+        },
+        header: () => <span>Rank</span>,
+        footer: () => <span>Rank</span>,
+    },
+    {
+        accessorKey: 'ranksdiff',
+        id: 'ranksdiff',
+        cell: (props) => {
+            if (props.row.original.ranksdiff < 0) {
+                return (
+                    <p class='inline-flex items-center justify-center space-x-4'>
                         <span class='inline-flex items-center justify-center space-x-2'>
                             <span class='text-rose-700'>
                                 <FiArrowDownRight />
@@ -39,17 +65,11 @@ export const columns: ColumnDef<Team>[] = [
             } else if (props.row.original.ranksdiff === 0) {
                 return (
                     <p class='inline-flex items-center justify-center space-x-4'>
-                        <span>{props.row.original.standing}</span>
-                        <span class='inline-flex items-center justify-center'>
-                            <span>
-                            </span>
-                        </span>
                     </p>
                 );
             } else {
                 return (
                     <p class='inline-flex items-center justify-center space-x-4'>
-                        <span>{props.row.original.standing}</span>
                         <span class='inline-flex items-center justify-center space-x-2'>
                             <span class='text-emerald-700'>
                                 <FiArrowUpRight />
@@ -62,15 +82,8 @@ export const columns: ColumnDef<Team>[] = [
                 );
             }
         },
-        header: () => <span>Rank</span>,
-        footer: () => <span>Rank</span>,
-    },
-    {
-        accessorKey: 'ranksdiff',
-        id: 'ranksdiff',
-        cell: () => <></>,
-        header: () => <span></span>,
-        footer: () => <span></span>,
+        header: () => <span>R. Diff</span>,
+        footer: () => <span>R. Diff</span>,
     },
     {
         accessorKey: 'points',
@@ -80,12 +93,6 @@ export const columns: ColumnDef<Team>[] = [
                 return (
                     <p class='inline-flex items-center justify-center'>
                         <span>{props.row.original.points}</span>
-                        <span class='pl-4 text-rose-700'>
-                            <FiArrowDownRight />
-                        </span>
-                        <span class='pl-1 text-rose-700'>
-                            {props.row.original.pointsdiff}
-                        </span>
                     </p>
                 );
             } else if (props.row.original.pointsdiff === 0) {
@@ -100,12 +107,6 @@ export const columns: ColumnDef<Team>[] = [
                 return (
                     <p class='inline-flex items-center justify-center'>
                         <span>{props.row.original.points}</span>
-                        <span class='pl-4 text-emerald-700'>
-                            <FiArrowUpRight />
-                        </span>
-                        <span class='pl-1  text-emerald-600'>
-                            {props.row.original.pointsdiff}
-                        </span>
                     </p>
                 );
             }
@@ -116,9 +117,39 @@ export const columns: ColumnDef<Team>[] = [
     {
         accessorKey: 'pointsdiff',
         id: 'pointsdiff',
-        cell: () => <></>,
-        header: () => <></>,
-        footer: () => <></>,
+        cell: (props) => {
+            if (props.row.original.pointsdiff < 0) {
+                return (
+                    <p class='inline-flex items-center justify-center'>
+                        <span class='pl-4 text-rose-700'>
+                            <FiArrowDownRight />
+                        </span>
+                        <span class='pl-1 text-rose-700'>
+                            {props.row.original.pointsdiff}
+                        </span>
+                    </p>
+                );
+            } else if (props.row.original.pointsdiff === 0) {
+                return (
+                    <p class='inline-flex items-center justify-center'>
+                    </p>
+                );
+            } else {
+                return (
+                    <p class='inline-flex items-center justify-center'>
+                        <span class='pl-4 text-emerald-700'>
+                            <FiArrowUpRight />
+                        </span>
+                        <span class='pl-1  text-emerald-600'>
+                            {props.row.original.pointsdiff}
+                        </span>
+                    </p>
+                );
+            }
+        }
+        ,
+        header: () => <>P. Diff</>,
+        footer: () => <>P. Diff</>,
     },
     {
         accessorKey: 'team',
